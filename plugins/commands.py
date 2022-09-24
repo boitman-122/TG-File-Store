@@ -79,7 +79,7 @@ async def start(c, m, cb=False):
                     await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
                     await asyncio.sleep(1)
                 except FloodWait as e:
-                    await asyncio.sleep(e.x)
+                    await asyncio.sleep(e.value)
                     await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
                 except:
                     pass

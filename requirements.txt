@@ -1,5 +1,5 @@
-pyrogram==1.4.16
-Pyromod
+pyrogram==2.0.55
 TgCrypto
 psycopg2-binary
 sqlalchemy==1.3.23
+https://github.com/Ns-AnoNymouS/pyromod/archive/refs/heads/master.zip
