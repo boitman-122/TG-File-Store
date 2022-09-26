@@ -22,9 +22,19 @@ async def forcesub(c, m):
                     decoded_data = await decode(m.text.split()[1])
                     chat_id, msg_id = decoded_data.split('_')
                     buttons.append([InlineKeyboardButton('🔄 Refresh', callback_data=f'refresh+{chat_id}+{msg_id}')])
+            text = f"""Hello {m.from_user.mention()}
+ಈ ಬಾಟ್ ಅನ್ನು ಬಳಸಲು ದಯವಿಟ್ಟು ನನ್ನ ಮುಕ್ಯ ಚಾನಲ್‌ಗೆ ಸೇರಿ!
+
+ಓವರ್‌ಲೋಡ್‌ನಿಂದಾಗಿ, ಚಾನೆಲ್ ಚಂದಾದಾರರು ಮಾತ್ರ ಬಾಟ್ ಅನ್ನು ಬಳಸಬಹುದು!
+
+Please Join My Updates Channel to use this Bot!
+
+Due to Overload, Only Channel Subscribers can use the Bot!
+You need to join in my Channel/Group to use me
+
+Kindly Please join Channel"""
             await m.reply_text(
-                f"Hey {m.from_user.mention(style='md')} you need join My updates channel in order to use me 😉\n\n"
-                "__Press the Following Button to join Now 👇__",
+                text,
                 reply_markup=InlineKeyboardMarkup(buttons),
                 quote=True
             )
