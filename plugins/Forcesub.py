@@ -42,29 +42,3 @@ Kindly Please join Channel"""
             await m.reply_text(f"Something Wrong. Please try again later or contact {owner.mention(style='md')}", quote=True)
             return
     await m.continue_propagation()
-
-
-from plugins.commands import start
-@Client.on_callback_query(filters.regex('^refresh'))
-async def refresh_cb(c, m):
-    owner = await c.get_users(int(OWNER_ID))
-    if UPDATE_CHANNEL:
-        try:
-            user = await c.get_chat_member(UPDATE_CHANNEL, m.from_user.id)
-            if user.status == "banned":
-               try:
-                   await m.message.edit("**Hey you are banned 😜**")
-               except:
-                   pass
-               return
-        except UserNotParticipant:
-            await m.answer('You are not yet joined our channel. First join and then press refresh button 🤤', show_alert=True)
-            return
-        except Exception as e:
-            print(e)
-            await m.message.edit(f"Something Wrong. Please try again later or contact {owner.mention(style='md')}")
-            return
-
-    cmd, data = m.data.split("+")
-    m = m.reply_to_message 
-    await start(c, m)
