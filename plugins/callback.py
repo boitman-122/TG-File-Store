@@ -141,6 +141,8 @@ async def refresh_cb(c, m):
             await m.message.edit(f"Something Wrong. Please try again later or contact {owner.mention(style='md')}")
             return
 
+    await m.answer()
+    await m.message.delete()
     cmd, data = m.data.split("+")
     m = m.message.reply_to_message
     m.command = [cmd, data]
