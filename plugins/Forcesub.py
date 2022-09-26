@@ -4,14 +4,12 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant
 from database.database import *
 from config import *
-from plugins.commands import start
+
 
 @Client.on_message(filters.private & filters.incoming)
 async def forcesub(c, m):
     owner = await c.get_users(int(OWNER_ID))
-    print(UPDATE_CHANNEL)
     if UPDATE_CHANNEL:
-        print(2)
         try:
             user = await c.get_chat_member(UPDATE_CHANNEL, m.from_user.id)
             if user.status == "banned":
@@ -46,6 +44,7 @@ Kindly Please join Channel"""
     await m.continue_propagation()
 
 
+from plugins.commands import start
 @Client.on_callback_query(filters.regex('^refresh'))
 async def refresh_cb(c, m):
     owner = await c.get_users(int(OWNER_ID))
