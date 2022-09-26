@@ -9,7 +9,9 @@ from plugins.commands import start
 @Client.on_message(filters.private & filters.incoming)
 async def forcesub(c, m):
     owner = await c.get_users(int(OWNER_ID))
+    print(UPDATE_CHANNEL)
     if UPDATE_CHANNEL:
+        print(2)
         try:
             user = await c.get_chat_member(UPDATE_CHANNEL, m.from_user.id)
             if user.status == "banned":
