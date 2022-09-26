@@ -9,7 +9,9 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 from .commands import start, BATCH
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.errors import UserNotParticipant
 from config import *
+
 
 @Client.on_callback_query(filters.regex('^help$'))
 async def help_cb(c, m):
