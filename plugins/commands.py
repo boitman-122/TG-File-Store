@@ -112,11 +112,12 @@ async def start(c, m, cb=False):
                 caption += f"__👤 User Id:__ `{user.id}`\n\n" 
                 caption += f"__💬 DC ID:__ {user.dc_id}\n\n" if user.dc_id else ""
 
-
-        await send_msg.delete()
-        await msg.copy(m.from_user.id, caption=caption, protect_content=PROTECT_CONTENT)
-
-
+        try:
+            await send_msg.delete()
+            x = await msg.copy(m.from_user.id, caption=caption, protect_content=PROTECT_CONTENT)
+            await asyncio.sleep(1)
+            await x.delete()
+        except: pass
     else: # sending start message
         await send_msg.edit(
             text=text,
