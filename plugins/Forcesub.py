@@ -4,7 +4,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant
 from database.database import *
 from config import *
-from plugins.commands import decode
+from plugins.commands import start
 
 @Client.on_message(filters.private & filters.incoming)
 async def forcesub(c, m):
