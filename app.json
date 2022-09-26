@@ -50,6 +50,11 @@
       "description": "Add True if you want to use as Private",
       "value": "",
       "required": false
+    },
+    "PROTECT_CONTENT": {
+      "description": "Set this value to True to protect your files from forwarding default to True",
+      "value": "",
+      "required": false
     }
   },
   "addons": [
