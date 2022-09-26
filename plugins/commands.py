@@ -78,7 +78,9 @@ async def start(c, m, cb=False):
                     x.append(y)
                 except:
                     pass
+            v = await m.reply_text(f"This files will be deleted automatically after {DELETE_TIME}hrs")
             await asyncio.sleep(DELETE_TIME*60*60)
+            await v.delete()
             for y in x:
                 try:
                     await y.delete()
@@ -117,8 +119,10 @@ async def start(c, m, cb=False):
         try:
             await send_msg.delete()
             x = await msg.copy(m.from_user.id, caption=caption, protect_content=PROTECT_CONTENT)
+            v = await m.reply_text(f"This files will be deleted automatically after {DELETE_TIME}hrs")
             await asyncio.sleep(DELETE_TIME*60*60)
             await x.delete()
+            await v.delete()
         except: pass
     else: # sending start message
         await send_msg.edit(
