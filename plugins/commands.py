@@ -69,6 +69,7 @@ async def start(c, m, cb=False):
                 owner = await c.get_users(int(OWNER_ID))
                 return await m.reply_text(f"🥴 Sorry bro your file was deleted by file owner or bot owner\n\nFor more help contact my owner 👉 {owner.mention(style='md')}")
             message_ids = (await decode(string.text)).split('-')
+            x = []
             for msg_id in message_ids:
                 msg = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
 
@@ -76,11 +77,20 @@ async def start(c, m, cb=False):
                     owner = await c.get_users(int(OWNER_ID))
                     return await m.reply_text(f"🥴 Sorry bro your file was deleted by file owner or bot owner\n\nFor more help contact my owner 👉 {owner.mention(style='md')}")
                 try:
-                    await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+                    y = await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+                    x.append(y)
                     await asyncio.sleep(1)
                 except FloodWait as e:
                     await asyncio.sleep(e.value)
-                    await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+                    y = await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+                    x.append(y)
+                except:
+                    pass
+            await asyncio.sleep(DELETE_TIME*60*60)
+            for y in x:
+                try:
+                    await y.delete()
+                    await asyncio.sleep(1)
                 except:
                     pass
             return
@@ -115,7 +125,7 @@ async def start(c, m, cb=False):
         try:
             await send_msg.delete()
             x = await msg.copy(m.from_user.id, caption=caption, protect_content=PROTECT_CONTENT)
-            await asyncio.sleep(1)
+            await asyncio.sleep(DELETE_TIME*60*60)
             await x.delete()
         except: pass
     else: # sending start message
