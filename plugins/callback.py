@@ -142,5 +142,6 @@ async def refresh_cb(c, m):
             return
 
     cmd, data = m.data.split("+")
-    m = m.message.reply_to_message 
+    m = m.message.reply_to_message
+    m.command = [cmd, data]
     await start(c, m)
