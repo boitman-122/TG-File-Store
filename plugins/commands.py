@@ -35,15 +35,9 @@ async def start(c, m, cb=False):
 """
 
     # Buttons
-    buttons = [
-        [
+    buttons = [[
             InlineKeyboardButton('My Father 👨‍✈️', url="https://t.me/Zk_Serials"),
-            InlineKeyboardButton('Help 💡', callback_data="help")
-        ],
-        [
-            InlineKeyboardButton('About 📕', callback_data="about")
-        ]
-    ]
+    ]]
 
     # when button home is pressed
     if cb:
