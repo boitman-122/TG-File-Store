@@ -23,8 +23,6 @@ async def start(c, m, cb=False):
         send_msg = await m.reply_text("**Processing...**", quote=True)
 
     owner = await c.get_users(int(OWNER_ID))
-    owner_username = owner.username if owner.username else 'Ns_bot_updates'
-
     # start text
     text = f"""Hey! {m.from_user.mention(style='md')}
 
@@ -39,7 +37,7 @@ async def start(c, m, cb=False):
     # Buttons
     buttons = [
         [
-            InlineKeyboardButton('My Father 👨‍✈️', url=f"https://t.me/{owner_username}"),
+            InlineKeyboardButton('My Father 👨‍✈️', url=f"tg://user?id={owner.id}"),
             InlineKeyboardButton('Help 💡', callback_data="help")
         ],
         [
