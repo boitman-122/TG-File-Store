@@ -4,7 +4,7 @@ API_ID = int(os.environ.get("API_ID", 0))
 API_HASH = os.environ.get("API_HASH", None)
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 DB_CHANNEL_ID = os.environ.get("DB_CHANNEL_ID")
-IS_PRIVATE = os.environ.get("IS_PRIVATE",False) # any input is ok But True preferable
+IS_PRIVATE = True if os.environ.get("IS_PRIVATE",False) == "True" else False # any input is ok But True preferable
 OWNER_ID = int(os.environ.get("OWNER_ID"))
 PROTECT_CONTENT = True if os.environ.get("PROTECT_CONTENT", "True") == "True" else False
 UPDATE_CHANNEL = os.environ.get('UPDATE_CHANNEL', '')
