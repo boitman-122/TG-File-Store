@@ -60,8 +60,12 @@ async def refresh_cb(c, m):
             return
 
     cmd, chat_id, msg_id = m.data.split("+")
-    if isinstance(msg_id,  Message):
-        string = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
+    msg = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
+    if msg.empty:
+        return await m.message.edit(f"🥴 Sorry bro your file was missing\n\nPlease contact my owner 👉 {owner.mention(style='md')}")
+
+    if msg.text:
+        string = msg
         if string.empty:
             owner = await c.get_users(int(OWNER_ID))
             return await m.message.edit(f"🥴 Sorry bro your file was deleted by file owner or bot owner\n\nFor more help contact my owner 👉 {owner.mention(style='md')}")
@@ -81,10 +85,6 @@ async def refresh_cb(c, m):
             except:
                 pass
         return
-
-    msg = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
-    if msg.empty:
-        return await m.message.edit(f"🥴 Sorry bro your file was missing\n\nPlease contact my owner 👉 {owner.mention(style='md')}")
 
     caption = msg.caption.markdown
     as_uploadername = (await get_data(str(chat_id))).up_name
