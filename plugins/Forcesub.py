@@ -1,6 +1,6 @@
 import os
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserNotParticipant
 from database.database import *
 from config import *
@@ -59,9 +59,31 @@ async def refresh_cb(c, m):
             return
 
     cmd, chat_id, msg_id = m.data.split("+")
+    if isinstance(msg_id,  Message):
+        string = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
+        if string.empty:
+            owner = await c.get_users(int(OWNER_ID))
+            return await m.message.edit(f"🥴 Sorry bro your file was deleted by file owner or bot owner\n\nFor more help contact my owner 👉 {owner.mention(style='md')}")
+        message_ids = (await decode(string.text)).split('-')
+        await m.message.delete()
+        for msg_id in message_ids:
+            msg = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
+            if msg.empty:
+                owner = await c.get_users(int(OWNER_ID))
+                return await m.message.reply_text(f"🥴 Sorry bro your file was deleted by file owner or bot owner\n\nFor more help contact my owner 👉 {owner.mention(style='md')}")
+            try:
+                await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+                await asyncio.sleep(1)
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+                await msg.copy(m.from_user.id, protect_content=PROTECT_CONTENT)
+            except:
+                pass
+        return
+
     msg = await c.get_messages(int(chat_id), int(msg_id)) if not DB_CHANNEL_ID else await c.get_messages(int(DB_CHANNEL_ID), int(msg_id))
     if msg.empty:
-        return await m.reply_text(f"🥴 Sorry bro your file was missing\n\nPlease contact my owner 👉 {owner.mention(style='md')}")
+        return await m.message.edit(f"🥴 Sorry bro your file was missing\n\nPlease contact my owner 👉 {owner.mention(style='md')}")
 
     caption = msg.caption.markdown
     as_uploadername = (await get_data(str(chat_id))).up_name
