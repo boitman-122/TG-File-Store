@@ -20,7 +20,9 @@ async def forcesub(c, m):
             if m.text:
                 if (len(m.text.split()) > 1) & ('start' in m.text):
                     decoded_data = await decode(m.text.split()[1])
-                    chat_id, msg_id = decoded_data.split('_')
+                    if len(decoded_data.split('_')) == 2:
+                        chat_id, msg_id = decoded_data.split('_')
+
                     buttons.append([InlineKeyboardButton('🔄 Refresh', callback_data=f'refresh+{chat_id}+{msg_id}')])
             await m.reply_text(
                 f"Hey {m.from_user.mention(style='md')} you need join My updates channel in order to use me 😉\n\n"
