@@ -19,8 +19,10 @@ BATCH = []
 @Client.on_message(filters.command('start') & filters.incoming & filters.private)
 async def start(c, m, cb=False):
     if not cb:
-        send_msg = await m.reply_text("**Processing...**", quote=True)
-
+        try:
+            send_msg = await m.reply_text("**Processing...**", quote=True)
+        except:
+            return
     owner = await c.get_users(int(OWNER_ID))
     # start text
     text = f"""Hey! {m.from_user.mention(style='md')}
